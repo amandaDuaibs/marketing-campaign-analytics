@@ -16,7 +16,7 @@ Este projeto simula o dia a dia de um **Analista de BI** especializado em market
 
 ---
 ## 📁 Fonte de Dados
-** https://www.kaggle.com/datasets/manishabhatt22/marketing-campaign-performance-dataset 
+**dado retirado da tabela presente em https://www.kaggle.com/datasets/manishabhatt22/marketing-campaign-performance-dataset
 **Tabela staging:** `marketing_campaign_dataset` — dados flat de campanhas multicanais.
 
 | Coluna | Tipo Original | Descrição |
