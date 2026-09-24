@@ -1,0 +1,51 @@
+Campaign_ID,Company,Campaign_Type,Target_Audience,Duration,Channel_Used,Conversion_Rate,Acquisition_Cost,ROI,Location,Language,Clicks,Impressions,Engagement_Score,Customer_Segment,Date
+1,Alpha Innovations,Email,Men 18-24,15 days,Google Ads,0.04,$5,482.00,6.1,Dallas,Spanish,766,7496,4,Health & Wellness,2022-11-19
+2,DataTech Solutions,Social Media,Women 25-34,30 days,Website,0.07,$17,258.00,8.4,Miami,Spanish,1563,9294,7,Foodies,2022-04-18
+3,NexGen Systems,Display,Men 25-34,45 days,YouTube,0.08,$12,911.00,3.7,New York,Mandarin,1110,6431,2,Outdoor Adventurers,2021-06-05
+4,Alpha Innovations,Influencer,Men 35-44,60 days,Instagram,0.06,$8,027.00,4.3,Chicago,English,977,8389,9,Tech Enthusiasts,2021-10-11
+5,Alpha Innovations,Search,Men 25-34,30 days,Email,0.03,$15,027.00,5.7,Houston,French,632,5663,6,Health & Wellness,2022-07-25
+6,DataTech Solutions,Email,Men 35-44,15 days,Google Ads,0.07,$18,679.00,2.9,Chicago,Spanish,1493,9137,7,Foodies,2022-02-15
+7,DataTech Solutions,Display,Women 25-34,45 days,Website,0.09,$6,715.00,6.2,New York,English,1372,6603,5,Tech Enthusiasts,2022-08-19
+8,NexGen Systems,Social Media,All Ages,60 days,Email,0.04,$10,535.00,7.1,Miami,Spanish,940,7870,3,Outdoor Adventurers,2022-05-12
+9,Alpha Innovations,Search,Women 35-44,30 days,YouTube,0.05,$9,342.00,4.9,Dallas,English,1204,6954,8,Health & Wellness,2021-12-03
+10,TechCorp,Display,Men 18-24,45 days,Instagram,0.08,$11,490.00,6.5,Houston,Mandarin,858,7121,4,Foodies,2022-09-08
+11,TechCorp,Influencer,Women 25-34,60 days,Website,0.06,$7,214.00,3.8,Chicago,French,1035,8246,6,Tech Enthusiasts,2021-11-27
+12,NexGen Systems,Email,All Ages,15 days,Google Ads,0.07,$13,876.00,5.2,Miami,Spanish,1418,9482,2,Outdoor Adventurers,2022-03-22
+13,Alpha Innovations,Display,Men 25-34,30 days,Email,0.05,$16,343.00,4.6,New York,English,772,5987,7,Health & Wellness,2022-06-14
+14,DataTech Solutions,Search,Women 35-44,45 days,YouTube,0.09,$8,905.00,6.9,Dallas,Mandarin,1296,8873,5,Foodies,2021-09-30
+15,TechCorp,Social Media,Men 35-44,60 days,Instagram,0.04,$12,118.00,3.4,Houston,French,1052,7612,8,Tech Enthusiasts,2022-01-17
+16,Alpha Innovations,Email,Women 25-34,15 days,Website,0.07,$5,930.00,7.3,Chicago,Spanish,1387,9315,3,Outdoor Adventurers,2022-04-29
+17,NexGen Systems,Display,All Ages,30 days,Google Ads,0.06,$14,206.00,5.8,Miami,English,921,6478,6,Health & Wellness,2021-08-21
+18,DataTech Solutions,Search,Men 18-24,45 days,Email,0.08,$10,744.00,4.2,New York,Mandarin,1156,8159,4,Foodies,2022-07-06
+19,TechCorp,Influencer,Women 35-44,60 days,YouTube,0.05,$6,388.00,6.7,Dallas,French,1342,9602,7,Tech Enthusiasts,2022-02-24
+20,Alpha Innovations,Display,Men 25-34,15 days,Instagram,0.07,$17,559.00,3.9,Houston,Spanish,884,5743,2,Outdoor Adventurers,2021-12-16
+21,DataTech Solutions,Email,All Ages,30 days,Website,0.06,$9,187.00,5.4,Chicago,English,1467,9246,5,Health & Wellness,2022-05-30
+22,NexGen Systems,Search,Women 25-34,45 days,Google Ads,0.08,$11,923.00,6.1,Miami,Mandarin,1093,7384,6,Foodies,2021-10-09
+23,TechCorp,Display,Men 35-44,60 days,Email,0.04,$13,401.00,4.8,New York,French,976,6891,3,Tech Enthusiasts,2022-08-13
+24,Alpha Innovations,Social Media,Women 25-34,15 days,YouTube,0.07,$7,856.00,7.0,Dallas,Spanish,1258,9047,8,Outdoor Adventurers,2021-11-04
+25,DataTech Solutions,Influencer,Men 18-24,30 days,Instagram,0.05,$15,972.00,5.5,Houston,English,1104,7758,4,Health & Wellness,2022-03-11
+26,NexGen Systems,Email,Women 35-44,45 days,Website,0.09,$8,433.00,6.8,Chicago,Mandarin,1379,9584,7,Foodies,2021-09-17
+27,TechCorp,Search,All Ages,60 days,Google Ads,0.06,$12,615.00,4.4,Miami,French,943,6512,5,Tech Enthusiasts,2022-06-27
+28,Alpha Innovations,Display,Men 25-34,15 days,Email,0.08,$6,094.00,7.6,New York,Spanish,1187,8436,3,Outdoor Adventurers,2022-01-29
+29,DataTech Solutions,Social Media,Women 25-34,30 days,YouTube,0.05,$16,748.00,3.6,Dallas,English,1042,7195,6,Health & Wellness,2021-12-29
+30,NexGen Systems,Influencer,Men 35-44,45 days,Instagram,0.07,$9,521.00,6.3,Houston,Mandarin,1315,9318,4,Foodies,2022-04-06
+31,TechCorp,Email,Women 25-34,60 days,Website,0.04,$11,087.00,5.9,Chicago,French,889,6284,7,Tech Enthusiasts,2021-10-22
+32,Alpha Innovations,Search,Men 18-24,15 days,Google Ads,0.07,$14,334.00,4.7,Miami,Spanish,1423,9771,2,Outdoor Adventurers,2022-07-18
+33,DataTech Solutions,Display,Women 35-44,30 days,Email,0.06,$7,662.00,6.4,New York,English,1058,7823,5,Health & Wellness,2022-02-08
+34,NexGen Systems,Social Media,All Ages,45 days,YouTube,0.08,$10,296.00,5.1,Dallas,Mandarin,1234,8942,6,Foodies,2021-11-19
+35,TechCorp,Influencer,Men 25-34,60 days,Instagram,0.05,$8,149.00,7.2,Houston,French,972,6471,3,Tech Enthusiasts,2022-05-04
+36,Alpha Innovations,Email,Women 25-34,15 days,Website,0.09,$5,421.00,6.6,Chicago,Spanish,1394,9568,8,Outdoor Adventurers,2022-08-26
+37,NexGen Systems,Display,Men 35-44,30 days,Google Ads,0.06,$13,075.00,4.5,Miami,English,876,5934,4,Health & Wellness,2021-09-05
+38,DataTech Solutions,Search,Women 25-34,45 days,Email,0.07,$11,538.00,5.7,New York,Mandarin,1167,8265,6,Foodies,2022-01-13
+39,TechCorp,Display,Men 18-24,60 days,YouTube,0.04,$9,803.00,6.9,Dallas,French,1043,7412,7,Tech Enthusiasts,2021-12-07
+40,Alpha Innovations,Social Media,Women 35-44,15 days,Instagram,0.08,$6,577.00,3.8,Houston,Spanish,1286,9185,2,Outdoor Adventurers,2022-03-29
+41,DataTech Solutions,Email,All Ages,30 days,Website,0.07,$12,194.00,5.3,Chicago,English,918,6687,5,Health & Wellness,2021-10-30
+42,NexGen Systems,Search,Women 25-34,45 days,Google Ads,0.09,$7,940.00,7.4,Miami,Mandarin,1352,9427,6,Foodies,2022-06-11
+43,TechCorp,Influencer,Men 35-44,60 days,Email,0.05,$14,861.00,4.1,New York,French,1097,7934,3,Tech Enthusiasts,2021-11-13
+44,Alpha Innovations,Display,Men 25-34,15 days,YouTube,0.07,$8,276.00,6.2,Dallas,Spanish,1145,8372,7,Outdoor Adventurers,2022-02-21
+45,DataTech Solutions,Social Media,Women 25-34,30 days,Instagram,0.06,$15,417.00,5.6,Houston,English,982,6153,4,Foodies,2021-08-28
+46,NexGen Systems,Email,All Ages,45 days,Website,0.08,$10,652.00,6.7,Chicago,Mandarin,1268,9014,5,Health & Wellness,2022-04-24
+47,TechCorp,Search,Women 35-44,60 days,Google Ads,0.06,$12,938.00,4.9,Miami,French,891,6238,6,Tech Enthusiasts,2022-07-31
+48,Alpha Innovations,Display,Men 18-24,15 days,Email,0.07,$6,735.00,7.1,New York,Spanish,1402,9647,2,Outdoor Adventurers,2021-09-23
+49,DataTech Solutions,Social Media,Women 25-34,30 days,YouTube,0.05,$9,068.00,5.8,Dallas,English,1123,8046,7,Health & Wellness,2022-05-17
+50,NexGen Systems,Influencer,Men 35-44,45 days,Instagram,0.08,$11,324.00,6.4,Houston,Mandarin,1305,9289,3,Foodies,2021-12-13

@@ -19,7 +19,7 @@ import sys
 import os
 
 def main():
-    if len(sys.argv) de 2:
+    if len(sys.argv) < 2:
         print(__doc__)
         sys.exit(1)
 
@@ -28,7 +28,7 @@ def main():
     pasta_sql = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sql")
 
     if not os.path.exists(caminho_csv):
-    	sys.exit(f"CSV nao encontrado: {caminho_csv}")
+        sys.exit(f"CSV nao encontrado: {caminho_csv}")
 
     if os.path.exists(nome_banco):
         os.remove(nome_banco)
