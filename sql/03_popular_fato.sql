@@ -1,7 +1,13 @@
---alterar atividades da coluna
-UPDATE fact_campaign
+-- ETL da tabela fato
+-- Ordem correta: limpeza na staging ANTES da carga da fato
+
+-- 1. Limpeza do acquisition_cost na staging
+-- (o valor chega como texto '$16,174.00'; sem essa limpeza o SQLite
+--  não converte para número e as médias ignoram as linhas)
+UPDATE marketing_campaign_dataset
 SET acquisition_cost = REPLACE(REPLACE(acquisition_cost, '$', ''), ',', '');
---criar colunas 
+
+-- 2. Colunas de ID na staging
 ALTER TABLE marketing_campaign_dataset
 ADD COLUMN id_audience INTEGER;
 
@@ -17,7 +23,7 @@ ADD COLUMN id_date INTEGER;
 ALTER TABLE marketing_campaign_dataset
 ADD COLUMN id_location INTEGER;
 
---updates is ids
+-- 3. Mapeamento dos IDs (staging → dimensões)
 
 UPDATE marketing_campaign_dataset as mkt
 SET id_location = (
@@ -52,8 +58,8 @@ SET id_date = (
     SELECT id_date
     FROM dim_date AS d
     WHERE d.date = mkt.date);
-	
-DROP TABLE fact_campaign;	
+
+-- 4. Carga da fato (com os IDs já mapeados e o custo já limpo)
 INSERT INTO fact_campaign (
     id_campaign, id_audience, id_channel, id_date, id_company, id_location,
     duration, acquisition_cost, roi, clicks, impressions, engagement_score
