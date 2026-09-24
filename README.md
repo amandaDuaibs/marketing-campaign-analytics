@@ -12,11 +12,12 @@ Este projeto simula o dia a dia de um **Analista de BI** especializado em market
 - Modelagem dimensional (6 dimensões + 1 tabela fato)
 - ETL completo com SQL puro
 - Consultas descritivas de Nível 1 (contagens, médias, rankings, distribuições)
+- Banco de perguntas de diagnóstico por nível (1, 2 e 3)
 - Documentação do schema e das análises
 
 ---
 ## 📁 Fonte de Dados
-**dado retirado da tabela presente em https://www.kaggle.com/datasets/manishabhatt22/marketing-campaign-performance-dataset
+**Dado retirado da tabela presente em https://www.kaggle.com/datasets/manishabhatt22/marketing-campaign-performance-dataset**
 **Tabela staging:** `marketing_campaign_dataset` — dados flat de campanhas multicanais.
 
 | Coluna | Tipo Original | Descrição |
@@ -37,6 +38,32 @@ Este projeto simula o dia a dia de um **Analista de BI** especializado em market
 | Engagement_Score | INTEGER | Pontuação de engajamento |
 | Customer_Segment | TEXT | Segmento do cliente |
 | Date | TEXT | Data da campanha |
+
+---
+## 🗂️ Estrutura do Repositório
+
+```
+marketing-campaign-analytics/
+├── README.md
+├── sql/                              # ETL e modelagem (rodar nesta ordem)
+│   ├── 01_criar_tabelas.sql          # criação das 6 dimensões + tabela fato
+│   ├── 02_popular_dimensoes.sql      # carga das dimensões (SELECT DISTINCT)
+│   └── 03_popular_fato.sql           # mapeamento de IDs, carga da fato e limpeza
+└── analises/
+    ├── nivel1/                       # 9 consultas descritivas
+    │   ├── campanhas.sql             # contagens, duração, maior/menor (CTE + ROW_NUMBER)
+    │   ├── canais.sql                # campanhas por canal
+    │   ├── cliques.sql               # média/total de cliques, top 5, top impressões
+    │   ├── empresas.sql              # empresas e campanhas por empresa
+    │   ├── investimento.sql          # custo médio, min/max, investimento total
+    │   ├── publico.sql               # públicos-alvo e campanhas por público
+    │   ├── roi.sql                   # ROI médio, maior e menor
+    │   ├── segmentacao.sql           # segmentos de cliente
+    │   └── tempo.sql                 # campanhas por ano/mês/trimestre
+    └── diagnostico/                  # banco de perguntas de negócio
+        ├── perguntas-nivel2.sql      # diagnóstico comparativo (canal, tipo, público...)
+        └── perguntas-nivel3.sql      # recomendações e benchmark interno
+```
 
 ---
 ## 🏗️ Modelagem — Star Schema
@@ -96,33 +123,30 @@ location          TEXT
 ## 🔄 Processo de ETL
 
 1. **Carga das dimensões** com `SELECT DISTINCT` da staging
-2. **População da fato** via `INSERT INTO ... SELECT ... JOIN` ligando cada FK à staging
-3. **Limpeza de dados:** remoção de `$` e vírgulas do `acquisition_cost` com `REPLACE` + `CAST`
+2. **Mapeamento de IDs** na staging via `UPDATE` ligando cada FK à dimensão
+3. **População da fato** via `INSERT INTO ... SELECT`
+4. **Limpeza de dados:** remoção de `$` e vírgulas do `acquisition_cost` com `REPLACE`
 
 ```sql
 -- Limpeza do acquisition_cost
 UPDATE fact_campaign
-SET acquisition_cost = CAST(
-    REPLACE(REPLACE(acquisition_cost, '$', ''), ',', '') AS REAL
-);
+SET acquisition_cost = REPLACE(REPLACE(acquisition_cost, '$', ''), ',', '');
 ```
 
 ---
-
 ## 📈 Análises Realizadas (Nível 1 — Descritivas)
 
-| # | Consulta | Técnica |
-|---|---|---|
-| 1 | Contagem total de campanhas | `COUNT(*)` |
-| 2 | Campanhas por tipo | `GROUP BY` + `JOIN dim_campaign` |
-| 3 | Duração média | `AVG(duration)` |
-| 4 | Campanha de maior e menor duração | CTE + `ROW_NUMBER()` + `CASE` |
-| 5 | Campanhas por ano/mês | `GROUP BY year, month` + `JOIN dim_date` |
-| 6 | Custo médio de aquisição | `AVG(acquisition_cost)` |
-| 7 | Média de cliques | `AVG(clicks)` |
-| 8 | Média de impressões | `AVG(impressions)` |
-| 9 | ROI médio | `AVG(roi)` |
-| 10 | Visão geral de KPIs | Query única com múltiplos agregadores |
+| # | Consulta | Técnica | Arquivo |
+|---|---|---|---|
+| 1 | Contagem total de campanhas | `COUNT(*)` | `campanhas.sql` |
+| 2 | Campanhas por tipo | `GROUP BY` + `JOIN dim_campaign` | `campanhas.sql` |
+| 3 | Duração média | `AVG(duration)` | `campanhas.sql` |
+| 4 | Campanha de maior e menor duração | CTE + `ROW_NUMBER()` + `CASE` | `campanhas.sql` |
+| 5 | Campanhas por ano/mês | `GROUP BY year, month` + `JOIN dim_date` | `tempo.sql` |
+| 6 | Custo médio de aquisição | `AVG(acquisition_cost)` | `investimento.sql` |
+| 7 | Média e total de cliques | `AVG` / `SUM` | `cliques.sql` |
+| 8 | Top campanhas por impressões | `ORDER BY` + `LIMIT` | `cliques.sql` |
+| 9 | ROI médio, maior e menor | `AVG` / `MAX` / `MIN` | `roi.sql` |
 
 **Exemplo — maior e menor duração (CTE + Window Function):**
 
@@ -130,15 +154,12 @@ SET acquisition_cost = CAST(
 WITH ranked AS (
     SELECT
         fc.id_fact_campaign,
-        c.campaign_type,
         fc.duration,
         ROW_NUMBER() OVER (ORDER BY fc.duration) AS rn_asc,
         ROW_NUMBER() OVER (ORDER BY fc.duration DESC) AS rn_desc
     FROM fact_campaign fc
-    JOIN dim_campaign c ON fc.id_campaign = c.id_campaign
 )
 SELECT
-    campaign_type AS campaign_name,
     duration,
     CASE
         WHEN rn_asc = 1 THEN 'menor'
@@ -150,7 +171,6 @@ ORDER BY duration DESC;
 ```
 
 ---
-
 ## 🛠️ Stack Utilizada
 
 - **Banco de Dados:** SQLite (DB Browser for SQLite)
@@ -159,19 +179,17 @@ ORDER BY duration DESC;
 - **Conceitos:** CTEs, Window Functions (`ROW_NUMBER`), `CASE`, Agregações, Joins, Type Affinity
 
 ---
-
 ## 🚀 Como Reproduzir
 
 1. Clone o repositório
 2. Abra o arquivo `.db` no DB Browser for SQLite (ou qualquer cliente SQLite)
 3. Execute os scripts na ordem:
-   - `01_create_tables.sql` — criação das dimensões e fato
-   - `02_populate_dimensions.sql` — carga das dimensões
-   - `03_populate_fact.sql` — carga e limpeza da fato
-   - `04_analysis_queries.sql` — consultas analíticas
+   - `sql/01_criar_tabelas.sql` — criação das dimensões e fato
+   - `sql/02_popular_dimensoes.sql` — carga das dimensões
+   - `sql/03_popular_fato.sql` — carga e limpeza da fato
+4. Rode as consultas da pasta `analises/nivel1/`
 
 ---
-
 ## 🔮 Próximos Passos
 
 - Custo por clique (CPC) = `acquisition_cost / clicks`
@@ -183,16 +201,15 @@ ORDER BY duration DESC;
 - Dashboard no Power BI / Looker Studio conectado ao banco
 
 ---
-
 ## 👩‍💻 Autora
 
 **Amanda Duaibs**  
 Analista de BI Júnior | Dados, Dashboards e Decisões
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/amanda-duaibs-6b54a81b9/)  
+[![Portfólio](https://img.shields.io/badge/Portf%C3%B3lio-4479A1?style=flat&logo=github&logoColor=white)](https://amandaduaibs.github.io/Portfolio-Amanda-Duaibs/)  
 📧 amanda.duaibs@gmail.com
 
 ---
 
 > *"Dados são o ponto de partida. O insight é o destino."*
-
