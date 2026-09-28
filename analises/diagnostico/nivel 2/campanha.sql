@@ -1,3 +1,5 @@
+--Nível2:
+--Campanhas
 Qual tipo de campanha possui maior ROI?
 Qual tipo possui maior engajamento?
 Qual tipo gera mais cliques?
