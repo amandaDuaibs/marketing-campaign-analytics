@@ -62,8 +62,8 @@ marketing-campaign-analytics/
 │   │   ├── segmentacao.sql           # segmentos de cliente
 │   │   └── tempo.sql                 # campanhas por ano/mês/trimestre
 │   └── diagnostico/                  # banco de perguntas de negócio
-│       ├── perguntas-nivel2.sql      # diagnóstico comparativo (canal, tipo, público...)
-│       └── perguntas-nivel3.sql      # recomendações e benchmark interno
+│       ├── nivel 2/                  # diagnóstico comparativo (7 temas: campanha, canal, público...)
+│       └── nivel 3/                  # recomendações e benchmark interno (7 temas: performance, investimento...)
 ├── dados/
 │   └── marketing_campaign_amostra.csv  # amostra de 500 linhas para reprodução
 └── scripts/
@@ -229,7 +229,7 @@ Isso cria a staging a partir do CSV e roda o ETL completo (`sql/01`, `02`, `03`)
 ---
 ## 🔮 Próximos Passos
 
-- Responder as perguntas de diagnóstico (nível 2) com query + resultado + insight
+- Responder as perguntas de diagnóstico (níveis 2 e 3) com query + resultado + insight
 - Custo por clique (CPC) = `acquisition_cost / clicks`
 - Relação duração × ROI
 - Dashboard no Power BI / Looker Studio conectado ao banco
