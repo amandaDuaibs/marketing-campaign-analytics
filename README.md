@@ -13,6 +13,7 @@ Este projeto simula o dia a dia de um **Analista de BI** especializado em market
 - ETL completo com SQL puro
 - Consultas descritivas de Nível 1 (contagens, médias, rankings, distribuições)
 - Banco de perguntas de diagnóstico por nível (1, 2 e 3)
+- Dashboard interativo em Streamlit conectado ao banco
 - Script de reprodução: o banco inteiro é gerado a partir do CSV em um comando
 
 ---
@@ -45,6 +46,7 @@ Este projeto simula o dia a dia de um **Analista de BI** especializado em market
 ```
 marketing-campaign-analytics/
 ├── README.md
+├── app.py                            # dashboard interativo (Streamlit)
 ├── sql/                              # ETL e modelagem (rodar nesta ordem)
 │   ├── 01_criar_tabelas.sql          # criação das 6 dimensões + tabela fato
 │   ├── 02_popular_dimensoes.sql      # carga das dimensões (SELECT DISTINCT)
@@ -200,10 +202,30 @@ Resultados da execução do ETL e das análises sobre a base completa (200.000 c
 - Por ser balanceada, o valor do projeto está no **método** (modelagem + ETL + consultas reutilizáveis) e não em diferenças de performance entre grupos.
 
 ---
+## 📉 Dashboard Interativo (Streamlit)
+
+Além das consultas SQL, o projeto tem um **dashboard interativo** que lê o banco SQLite e cruza as análises dos três níveis:
+
+- **Visão geral** — KPIs (campanhas, investimento, cliques, CTR, ROI) e rankings por canal, empresa e local
+- **Por dimensão** — explorador livre: escolha a dimensão (canal, empresa, tipo, público, segmento, local) × a métrica (ROI, CTR, investimento, cliques, impressões)
+- **Tendências** — evolução mensal de ROI, cliques, engajamento e investimento × ROI
+- **Drill-down** — cascata empresa → canal → tipo, com KPIs do recorte e top 15 campanhas
+- Filtros na sidebar, incluindo **slider de período**
+- Tema dark próprio (azul-noite + dourado)
+
+**Como rodar:**
+```bash
+python scripts/criar_banco.py dados/marketing_campaign_amostra.csv marketing.db
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+---
 ## 🛠️ Stack Utilizada
 
 - **Banco de Dados:** SQLite (DB Browser for SQLite)
 - **Linguagem:** SQL · Python (script de reprodução)
+- **Dashboard:** Streamlit + Plotly
 - **Modelagem:** Star Schema (Data Warehouse)
 - **Conceitos:** CTEs, Window Functions (`ROW_NUMBER`), `CASE`, Agregações, Joins, Type Affinity
 
@@ -231,7 +253,7 @@ Isso cria a staging a partir do CSV e roda o ETL completo (`sql/01`, `02`, `03`)
 - Responder as perguntas de diagnóstico (níveis 2 e 3) com query + resultado + insight
 - Custo por clique (CPC) = `acquisition_cost / clicks`
 - Relação duração × ROI
-- Dashboard no Power BI / Looker Studio conectado ao banco
+- Deploy público do dashboard (Streamlit Community Cloud)
 
 ---
 ## 👩‍💻 Autora
