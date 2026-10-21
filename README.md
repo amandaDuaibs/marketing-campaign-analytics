@@ -61,9 +61,8 @@ marketing-campaign-analytics/
 │   │   ├── roi.sql                   # ROI médio, maior e menor
 │   │   ├── segmentacao.sql           # segmentos de cliente
 │   │   └── tempo.sql                 # campanhas por ano/mês/trimestre
-│   └── diagnostico/                  # banco de perguntas de negócio
-│       ├── nivel 2/                  # diagnóstico comparativo (7 temas: campanha, canal, público...)
-│       └── nivel 3/                  # recomendações e benchmark interno (7 temas: performance, investimento...)
+│   ├── nivel2/                       # diagnóstico comparativo (7 temas: campanha, canal, público...)
+│   └── nivel3/                       # recomendações e benchmark interno (7 temas: performance, investimento...)
 ├── dados/
 │   └── marketing_campaign_amostra.csv  # amostra de 500 linhas para reprodução
 └── scripts/
