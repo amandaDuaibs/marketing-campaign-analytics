@@ -204,6 +204,8 @@ Resultados da execução do ETL e das análises sobre a base completa (200.000 c
 ---
 ## 📉 Dashboard Interativo (Streamlit)
 
+**🔗 Veja o dashboard no ar:** https://marketing-campaign-analytics-3cse8tyxuaqynukkvxs8fn.streamlit.app/
+
 Além das consultas SQL, o projeto tem um **dashboard interativo** que lê o banco SQLite e cruza as análises dos três níveis:
 
 - **Visão geral** — KPIs (campanhas, investimento, cliques, CTR, ROI) e rankings por canal, empresa e local
@@ -213,7 +215,9 @@ Além das consultas SQL, o projeto tem um **dashboard interativo** que lê o ban
 - Filtros na sidebar, incluindo **slider de período**
 - Tema dark próprio (azul-noite + dourado)
 
-**Como rodar:**
+Na nuvem, o app constrói o banco sozinho na primeira carga (a partir do CSV de amostra + scripts `sql/`) — não precisa de setup manual.
+
+**Como rodar localmente:**
 ```bash
 python scripts/criar_banco.py dados/marketing_campaign_amostra.csv marketing.db
 pip install -r requirements.txt
@@ -253,7 +257,7 @@ Isso cria a staging a partir do CSV e roda o ETL completo (`sql/01`, `02`, `03`)
 - Responder as perguntas de diagnóstico (níveis 2 e 3) com query + resultado + insight
 - Custo por clique (CPC) = `acquisition_cost / clicks`
 - Relação duração × ROI
-- Deploy público do dashboard (Streamlit Community Cloud)
+- Divulgar o dashboard no LinkedIn
 
 ---
 ## 👩‍💻 Autora
