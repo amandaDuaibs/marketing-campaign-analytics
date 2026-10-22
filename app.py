@@ -13,8 +13,14 @@ Uso local:
     pip install -r requirements.txt
     python scripts/criar_banco.py dados/marketing_campaign_amostra.csv marketing.db
     streamlit run app.py
+
+Na nuvem (Streamlit Community Cloud) o marketing.db não vem do repo: o app
+constrói o banco sozinho na primeira carga, a partir do CSV de amostra e dos
+scripts sql/ do projeto.
 """
+import csv
 import sqlite3
+import tempfile
 from pathlib import Path
 
 import pandas as pd
@@ -103,12 +109,58 @@ def vangogh(fig: go.Figure) -> go.Figure:
 
 DB = Path(__file__).parent / "marketing.db"
 
+
+def _garantir_banco() -> str:
+    """Garante um banco com o ETL rodado.
+
+    1. Se existir um marketing.db junto ao app (rodada local), usa ele.
+    2. Senão (Streamlit Cloud: FS read-only), constrói o banco em pasta
+       temporária a partir do CSV de amostra + scripts sql/ do repo.
+    """
+    if DB.exists():
+        return str(DB)
+
+    st.info("Construindo o banco pela primeira vez (a partir do CSV de amostra)...", icon="⏳")
+    caminho_csv = Path(__file__).parent / "dados" / "marketing_campaign_amostra.csv"
+    pasta_sql = Path(__file__).parent / "sql"
+    tmp = Path(tempfile.mkdtemp())
+    banco = tmp / "marketing.db"
+
+    conn = sqlite3.connect(banco)
+    cur = conn.cursor()
+
+    with open(caminho_csv, newline="", encoding="utf-8") as f:
+        leitor = csv.reader(f)
+        header = next(leitor)
+        linhas = list(leitor)
+
+    colunas = ", ".join(f'"{c}" TEXT' for c in header)
+    cur.execute(f"CREATE TABLE marketing_campaign_dataset ({colunas})")
+    placeholders = ", ".join("?" * len(header))
+    cur.executemany(
+        f"INSERT INTO marketing_campaign_dataset VALUES ({placeholders})", linhas
+    )
+    conn.commit()
+
+    for script in ["01_criar_tabelas.sql", "02_popular_dimensoes.sql", "03_popular_fato.sql"]:
+        cur.executescript((pasta_sql / script).read_text(encoding="utf-8"))
+        conn.commit()
+
+    cur.execute("SELECT COUNT(*) FROM fact_campaign")
+    n = cur.fetchone()[0]
+    conn.close()
+    st.info(f"Banco pronto: {n} campanhas carregadas.", icon="✅")
+    return str(banco)
+
+
+DB_PATH = _garantir_banco()
+
 # ------------------------------------------------------------------
 # Dados (cache: o banco só é relido se o arquivo mudar)
 # ------------------------------------------------------------------
 @st.cache_data
 def carregar_dados() -> dict[str, pd.DataFrame]:
-    conn = sqlite3.connect(DB)
+    conn = sqlite3.connect(DB_PATH)
     tabelas = {
         "fato": """
             SELECT f.*, ch.channel_name, co.company_name, loc.location,
